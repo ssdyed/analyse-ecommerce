@@ -10,7 +10,7 @@ print("\nTypes de données étudiés et valeurs manquantes par colonne :")
 print(data.info())
 
 # les valeurs manquantes en pourcentage
-pourcentage_manquants = (data.isnull().sum() / len(data)) *100
+pourcentage_manquants = (data.isnull().sum() / len(data)) * 100
 print("\nPourcentage de valeurs manquantes par colonne :")
 print(pourcentage_manquants)
 
@@ -26,6 +26,23 @@ print(data.describe())
 
 # Chiffre d'affaire total
 revenu_total = data["Revenu"].sum()
-print("\nLe revenu total pour toute cette période de temps est ",revenu_total)
+print(f"\nLe revenu total pour toute cette période de temps est {revenu_total:.2f}.")
 
-# La quantité du produit le plus vendu
+# Le produit le plus vendu
+produit_plus_vendu = data.groupby("Produit")["Quantité"].sum().idxmax()
+quantite_maximale = data.groupby("Produit")["Quantité"].sum().max()
+print(f"\nSur cette période de temps, nous avons vendu {quantite_maximale}"
+      f" unités de {produit_plus_vendu}.")
+
+# La catégorie la plus rentable
+categorie_rentable = data.groupby("Catégorie")["Revenu"].sum().idxmax()
+revenu_maximale = data.groupby("Catégorie")["Revenu"].sum().max()
+print(f"\nAyant rapporté {revenu_maximale:.2f}, la catégorie la plus rentable est {categorie_rentable}.")
+
+# Panier moyen des clients
+panier_moyen = revenu_total / data["Client_ID"].nunique()
+print(f"\nLe panier moyen par client est de {panier_moyen:.2f} dollars")
+
+# 3. Analyse temporelle des ventes
+
+# Tendances mensuelle des ventes
