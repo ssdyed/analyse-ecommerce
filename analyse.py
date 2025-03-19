@@ -1,4 +1,5 @@
 import pandas as pd
+import matplotlib.pyplot as plt
 
 # 1. Visualisation des données
 
@@ -46,3 +47,19 @@ print(f"\nLe panier moyen par client est de {panier_moyen:.2f} dollars")
 # 3. Analyse temporelle des ventes
 
 # Tendances mensuelle des ventes
+
+# transformer les dates en format datetime pour faire les calculs
+data["Date"] = pd.to_datetime(data["Date"])
+
+# regrouper les ventes ey le revenu par mois
+ventes_mensuelles = data.groupby(data["Date"].dt.to_period("M"))["Revenu"].sum()
+
+# graphique
+plt.figure(figsize=(10, 5))
+ventes_mensuelles.plot(kind="line", marker="o", linestyle="-", color="b")
+plt.title("Tendance mensuellle des ventes")
+plt.xlabel("Mois")
+plt.ylabel("Revenu total")
+plt.xticks(rotation=45)
+plt.grid(True)
+plt.show()
