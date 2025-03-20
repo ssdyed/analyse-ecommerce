@@ -63,3 +63,5 @@ plt.ylabel("Revenu total")
 plt.xticks(rotation=45)
 plt.grid(True)
 plt.show()
+
+# Les mois les plus performants
