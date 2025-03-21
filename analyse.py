@@ -51,11 +51,11 @@ print(f"\nLe panier moyen par client est de {panier_moyen:.2f} dollars")
 # transformer les dates en format datetime pour faire les calculs
 data["Date"] = pd.to_datetime(data["Date"])
 
-# regrouper les ventes ey le revenu par mois
+# regrouper les ventes et le revenu par mois
 ventes_mensuelles = data.groupby(data["Date"].dt.to_period("M"))["Revenu"].sum()
 
 # graphique
-plt.figure(figsize=(10, 5))
+plt.figure(figsize=(20, 7))
 ventes_mensuelles.plot(kind="line", marker="o", linestyle="-", color="b")
 plt.title("Tendance mensuellle des ventes")
 plt.xlabel("Mois")
@@ -64,4 +64,28 @@ plt.xticks(rotation=45)
 plt.grid(True)
 plt.show()
 
-# Les mois les plus performants
+# 3. Analyse des ventes par jour de la semaine
+
+# créer une colonne qui convertir les dates en jour
+data["Jour_Semaine"] = data["Date"].dt.day_name()
+
+# regrouper les ventes et le revenu par jour
+ventes_journalieres = data.groupby("Jour_Semaine")["Revenu"].sum()
+
+# mettre les jours dans l'ordre chronologique
+jours_ordre = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+ventes_journalieres = ventes_journalieres.reindex(jours_ordre)
+
+# les ventes par jours de la semaine
+print("\nVoici les ventes par jour de la semaine :")
+print(ventes_journalieres)
+
+# grpahique des ventes par jour de la semaine
+plt.figure(figsize=(10, 5))
+ventes_journalieres.plot(kind="bar", color="b")
+plt.title("Ventes par jour de la semaine")
+plt.xlabel("Jour de la semaine")
+plt.ylabel("Revenu total")
+plt.xticks(rotation=45)
+plt.grid(axis="y")
+plt.show()
