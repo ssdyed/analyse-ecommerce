@@ -88,4 +88,5 @@ plt.xlabel("Jour de la semaine")
 plt.ylabel("Revenu total")
 plt.xticks(rotation=45)
 plt.grid(axis="y")
-plt.show()
+plt.show() # graphique
+
